@@ -26,6 +26,4 @@ collections:
         fields:
           - { label: "name", name: "name", widget: "string" }
 
-      - label: "Conteúdo"
-        name: "content"
-        widget: "markdown"
+      - { label: "Conteúdo", name: "content", widget: "markdown" }
