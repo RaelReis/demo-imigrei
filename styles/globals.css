@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Space Grotesk", sans-serif;
+  }
+}
+
+@layer components {
+  .button-fill {
+    @apply text-xl bg-base-green px-8 py-2 text-white inline-block;
+  }
+
+  .button {
+    @apply text-xl bg-transparent px-8 py-2 text-base-green border border-base-green inline-block;
+  }
+
+  .input {
+    @apply py-2 text-base-green border-b border-base-green bg-transparent placeholder-base-green text-sm lg:text-base;
+  }
+
+  .linear-white-gradient {
+    background: linear-gradient(
+      0deg,
+      rgba(250, 250, 250, 1) 0%,
+      rgba(250, 250, 250, 1) 90%,
+      rgba(250, 250, 250, 0) 90%
+    );
+  }
+
+  @media (max-width: 984px) {
+    .linear-white-gradient {
+      background: linear-gradient(
+        0deg,
+        rgba(250, 250, 250, 1) 0%,
+        rgba(250, 250, 250, 1) 35%,
+        rgba(250, 250, 250, 0) 35%
+      );
+    }
+  }
+
+  .linear-green-gradient {
+    background: linear-gradient(0deg, rgba(227, 241, 228, 1) 75%, rgba(227, 241, 228, 0) 75%);
+  }
+}
