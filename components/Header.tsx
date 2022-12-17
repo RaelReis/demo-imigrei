@@ -6,11 +6,9 @@ export default function Header() {
   const { asPath } = useRouter();
 
   return (
-    <header className="w-screen py-[2.375rem] bg-base-green-light">
+    <header className="w-full py-[2.375rem] bg-base-green-light">
       <div className="container flex items-center justify-between">
-        <div>
-          <img src="/assets/logo.svg" alt="Main Logo" />
-        </div>
+        <img src="/assets/logo.svg" alt="Main Logo" />
 
         <nav className="hidden lg:flex items-center gap-14">
           <ul className="flex items-center text-base-green text-xl gap-14">
