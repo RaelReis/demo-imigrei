@@ -5,6 +5,7 @@ import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 
 import Header from "../../components/Header";
+import { GetStaticPaths } from "next";
 
 interface PostProps {
   data: string;
@@ -27,8 +28,6 @@ export default function Post({ data }: PostProps) {
     return <p>404</p>;
   }
 
-  console.log(data);
-
   return (
     <>
       <Header />
@@ -38,11 +37,12 @@ export default function Post({ data }: PostProps) {
           <ReactMarkdown>{description}</ReactMarkdown>
           <img src={thumbnail} alt="" />
           <p>{`tipo: ${type}`}</p>
-          {tags.map((tag) => (
-            <p key={tag.name} className="text-base-blue inline-block mr-2">
-              {tag.name}
-            </p>
-          ))}
+          {tags &&
+            tags.map((tag) => (
+              <p key={tag.name} className="text-base-blue inline-block mr-2">
+                {tag.name}
+              </p>
+            ))}
           <ReactMarkdown className="markdown">{content}</ReactMarkdown>
         </article>
       </main>
@@ -50,7 +50,14 @@ export default function Post({ data }: PostProps) {
   );
 }
 
-export function getServerSideProps(ctx: any) {
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
+  return {
+    paths: [], //indicates that no page needs be created at build time
+    fallback: "blocking", //indicates the type of fallback
+  };
+};
+
+export function getStaticProps(ctx: any) {
   const { slug } = ctx.params;
 
   const realSlug = slug.replace(/\.md$/, "");
