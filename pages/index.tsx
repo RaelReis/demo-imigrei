@@ -111,7 +111,7 @@ const Home: NextPage = () => {
 
           <section className="mt-6 py-8 linear-green-gradient overflow-hidden">
             <motion.div
-              className="container h-full cursor-grab"
+              className={`container h-full ${isDragable ? "cursor-grab" : ""}`}
               whileTap={{ cursor: "grabbing" }}
               key={carouselOneWidth}
             >
