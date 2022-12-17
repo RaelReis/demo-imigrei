@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 
 import Header from "../../components/Header";
 import { GetStaticPaths } from "next";
+import Image from "next/image";
 
 interface PostProps {
   data: string;
@@ -35,7 +36,7 @@ export default function Post({ data }: PostProps) {
         <article>
           <ReactMarkdown>{title}</ReactMarkdown>
           <ReactMarkdown>{description}</ReactMarkdown>
-          <img src={thumbnail} alt="" />
+          <Image src={thumbnail} alt="" />
           <p>{`tipo: ${type}`}</p>
           {tags &&
             tags.map((tag) => (
