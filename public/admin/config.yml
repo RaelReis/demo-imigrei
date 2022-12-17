@@ -3,10 +3,11 @@ backend:
   branch: main # Branch to update (optional; defaults to master)
 media_folder: public/img
 public_folder: img
+
 collections:
-  - label: "Blog"
-    name: "blog"
-    folder: "content/blog"
+  - label: "Post"
+    name: "Post"
+    folder: "content/blog/posts"
     create: true
     fields:
       - { label: "Titulo", name: "title", widget: "markdown" }
@@ -14,7 +15,7 @@ collections:
       - { label: "Data de públicação", name: "date", widget: "datetime" }
       - { label: "Thumbnail", name: "thumbnail", widget: "image", default: "/img/default-thumb.png" }
 
-      - label: "Type"
+      - label: "Tipo"
         name: "type"
         widget: "select"
         options: ["portugal", "italia"]
@@ -23,13 +24,8 @@ collections:
         name: "tags"
         widget: "list"
         fields:
-          - { label: "Tag Name", name: "tag", widget: "string" }
+          - { label: "name", name: "name", widget: "string" }
 
-      - label: "Content"
+      - label: "Conteúdo"
         name: "content"
-        widget: "object"
-        fields:
-          - { label: "Titulo", name: "title", widget: "markdown" }
-          - { label: "Paragrafo", name: "paragraph", widget: "markdown" }
-          - { label: "Imagem", name: "imagem", widget: "image" }
-
+        widget: "markdown"
