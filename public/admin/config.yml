@@ -9,6 +9,7 @@ collections:
     name: "Post"
     folder: "content/blog/posts"
     create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Titulo", name: "title", widget: "markdown" }
       - { label: "Descrição", name: "description", widget: "markdown" }
