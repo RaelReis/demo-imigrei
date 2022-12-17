@@ -1,19 +1,17 @@
 import Head from "next/head";
-import { attributes, react as HomeContent } from "../content/home.md";
+import { attributes, react as PostContent } from "../content/blog/posts/teste-final-em.md";
 
-interface Attributes {
+interface Post {
   title: string;
-  date: Date;
-  cats: Cat[];
-}
-
-interface Cat {
-  name: string;
   description: string;
+  date: Date;
+  thumbnail: string;
+  type: { name: string }[];
+  content: string;
 }
 
 export default function Teste() {
-  let { title, cats } = attributes as Attributes;
+  const { title, description, date, thumbnail, type, content } = attributes as Post;
 
   return (
     <>
@@ -22,15 +20,10 @@ export default function Teste() {
       </Head>
       <article>
         <h1>{title}</h1>
-        <HomeContent />
-        <ul>
-          {cats.map((cat, k) => (
-            <li key={k}>
-              <h2>{cat.name}</h2>
-              <p>{cat.description}</p>
-            </li>
-          ))}
-        </ul>
+        <p>{description}</p>
+        <img src={thumbnail} alt="" />
+        <p>{`tipo: ${type}`}</p>
+        <PostContent />
       </article>
     </>
   );
