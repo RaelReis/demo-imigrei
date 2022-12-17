@@ -9,10 +9,10 @@ export default function Footer() {
           <img className="self-start lg:self-center w-[192px]" src="/assets/footer-logo.svg" alt="" />
           <p>Rua Manual João Souza, 540, São Paulo/SP - Brasil CNPJ: 000000/0000-00</p>
           <div className="flex gap-5 items-center">
-            <Link className="duration-300 hover:brightness-125" href="#">
+            <Link className="duration-300 hover:brightness-125" href="#" aria-label="instagram">
               <img src="/assets/instagram-icon.svg" alt="" />
             </Link>
-            <Link className="duration-300 hover:brightness-125" href="#">
+            <Link className="duration-300 hover:brightness-125" href="#" aria-label="facebook">
               <img src="/assets/facebook-icon.svg" alt="" />
             </Link>
           </div>

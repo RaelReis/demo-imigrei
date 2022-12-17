@@ -59,7 +59,7 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Home</title>
-        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content="Página de demonstração da imigrei" />
       </Head>
       <Header />
       <main className="w-full min-h-screen py-0">
