@@ -22,6 +22,7 @@ module.exports = {
           text: "#777777",
           label: "#1E5720",
           green: "#1E5720",
+          blue: "#11569E",
           "green-light": "#E3F1E4",
           white: "#FAFAFA",
           footer: "#D9D9D9",

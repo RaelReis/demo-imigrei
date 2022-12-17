@@ -2,20 +2,36 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
+const pathMap = {
+  home: "/",
+};
+
 export default function Header() {
   const { asPath } = useRouter();
+
+  function handleCurrentPathClasses(path: "home") {
+    return pathMap[path] === asPath ? "border-b border-base-blue text-base-blue" : "border-b text-base-green ";
+  }
 
   return (
     <header className="w-full py-[2.375rem] bg-base-green-light">
       <div className="container flex items-center justify-between">
         <img src="/assets/logo.svg" alt="Main Logo" />
 
-        <nav className="hidden lg:flex items-center gap-14">
-          <ul className="flex items-center text-base-green text-xl gap-14">
-            <li>Home</li>
-            <li>Serviços</li>
-            <li>Quem Somos</li>
-            <li>Blog</li>
+        <nav className="hidden lg:flex items-center text-xl gap-14">
+          <ul className="flex items-center gap-14">
+            <li className={handleCurrentPathClasses("home")}>
+              <Link href="#">Home</Link>
+            </li>
+            <li>
+              <Link href="#">Serviços</Link>
+            </li>
+            <li>
+              <Link href="#">Quem Somos</Link>
+            </li>
+            <li>
+              <Link href="#">Blog</Link>
+            </li>
           </ul>
           <Link className="button-fill" href="#">
             Contato

@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     font-family: "Space Grotesk", sans-serif;
   }
@@ -10,17 +13,23 @@
 
 @layer components {
   .button-fill {
-    @apply text-xl bg-base-green px-8 py-2 text-white inline-block;
+    @apply text-xl bg-base-green px-8 py-2 text-white inline-block duration-300 hover:bg-base-blue;
   }
 
   .button {
-    @apply text-xl bg-transparent px-8 py-2 text-base-green border border-base-green inline-block;
+    @apply text-xl bg-transparent px-8 py-2 text-base-green border border-base-green inline-block duration-300 hover:bg-base-green hover:text-white;
   }
 
   .input {
-    @apply py-2 text-base-green border-b border-base-green bg-transparent placeholder-base-green text-sm lg:text-base;
+    @apply py-2 text-base-green border-b border-base-green bg-transparent placeholder-base-green text-sm lg:text-base outline-none;
   }
 
+  .link {
+    @apply underline inline-block text-base-green w-fit duration-300 hover:text-base-blue;
+  }
+}
+
+@layer utilities {
   .linear-white-gradient {
     background: linear-gradient(
       0deg,

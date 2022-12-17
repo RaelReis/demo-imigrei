@@ -126,10 +126,7 @@ const Home: NextPage = () => {
                       Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em
                       Portugal e Itália!
                     </p>
-                    <Link
-                      href="#"
-                      className="text-sm lg:text-base inline-block text-base-green underline mt-4 lg:mt-11"
-                    >
+                    <Link href="#" className="link mt-4 lg:mt-11">
                       Saber Mais
                     </Link>
                   </div>
@@ -144,10 +141,7 @@ const Home: NextPage = () => {
                       Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em
                       Portugal e Itália!
                     </p>
-                    <Link
-                      href="#"
-                      className="text-sm lg:text-base inline-block text-base-green underline mt-4 lg:mt-11"
-                    >
+                    <Link href="#" className="link mt-4 lg:mt-11">
                       Saber Mais
                     </Link>
                   </div>
@@ -162,10 +156,7 @@ const Home: NextPage = () => {
                       Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em
                       Portugal e Itália!
                     </p>
-                    <Link
-                      href="#"
-                      className="text-sm lg:text-base inline-block text-base-green underline mt-4 lg:mt-11"
-                    >
+                    <Link href="#" className="link mt-4 lg:mt-11">
                       Saber Mais
                     </Link>
                   </div>
@@ -182,7 +173,7 @@ const Home: NextPage = () => {
           </p>
           <form className="flex flex-wrap items-center justify-center gap-4 mt-8 max-w-md mx-auto">
             <input
-              className="flex-grow lg:flex-initial py-3 px-1 border-b border-base-green w-64 bg-transparent"
+              className="input flex-grow lg:flex-initial w-64"
               type="text"
               placeholder="Digite o seu melhor E-mail"
             />
@@ -219,7 +210,7 @@ const Home: NextPage = () => {
                 <p className="text-base-text">
                   Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
                 </p>
-                <Link href="#" className="text-base-green underline">
+                <Link href="#" className="link">
                   Ler este Post
                 </Link>
               </li>
@@ -231,7 +222,7 @@ const Home: NextPage = () => {
                 <p className="text-base-text">
                   Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
                 </p>
-                <Link href="#" className="text-base-green underline">
+                <Link href="#" className="link">
                   Ler este Post
                 </Link>
               </li>
@@ -243,7 +234,7 @@ const Home: NextPage = () => {
                 <p className="text-base-text">
                   Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
                 </p>
-                <Link href="#" className="text-base-green underline">
+                <Link href="#" className="link">
                   Ler este Post
                 </Link>
               </li>
@@ -255,7 +246,7 @@ const Home: NextPage = () => {
                 <p className="text-base-text">
                   Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
                 </p>
-                <Link href="#" className="text-base-green underline">
+                <Link href="#" className="link">
                   Ler este Post
                 </Link>
               </li>
@@ -280,7 +271,17 @@ const Home: NextPage = () => {
                 <input className="input flex-grow" type="text" placeholder="Telefone" />
               </div>
               <textarea className="input min-h-[5rem]" placeholder="Mensagem" />
-              <button className="mt-8 button-fill text-sm lg:text-base">Enviar</button>
+              <button className="mt-8 button-fill text-sm lg:text-base flex items-center justify-center gap-5 group relative">
+                <span>Enviar</span>
+                <div className="absolute right-32 opacity-0 duration-300 group-hover:opacity-100 group-hover:right-[11rem]">
+                  <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M-2.50794e-07 6.2375L0.892498 6.2375L2.1675 7.9375L7.50125 7.9375L5.3125 0.499999L6.545 0.5L10.9225 7.9375L15.9375 7.9375C16.235 7.9375 16.4865 8.04021 16.6919 8.24563C16.8973 8.45104 17 8.7025 17 9C17 9.2975 16.8973 9.54896 16.6919 9.75438C16.4865 9.95979 16.235 10.0625 15.9375 10.0625L10.9225 10.0625L6.545 17.5L5.3125 17.5L7.50125 10.0625L2.1675 10.0625L0.892498 11.7625L-4.923e-07 11.7625L0.786249 9L-2.50794e-07 6.2375Z"
+                      fill="#FCFCFC"
+                    />
+                  </svg>
+                </div>
+              </button>
             </form>
           </div>
           <img className="hidden lg:block self-end mx-auto" src="/assets/contact-img.png" alt="" />
