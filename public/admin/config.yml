@@ -12,14 +12,7 @@ collections:
       - { label: "Titulo", name: "title", widget: "markdown" }
       - { label: "Descrição", name: "description", widget: "markdown" }
       - { label: "Data de públicação", name: "date", widget: "datetime" }
-      - { label: "Thumbnail", name: "thumbnail", widget: "image" }
-      - label: "Body"
-        name: "body"
-        widget: "list"
-        fields:
-          - { label: "Subtitulo", name: "subtitulo", widget: "markdown" }
-          - { label: "Paragrafo", name: "paragrafo", widget: "markdown" }
-          - { label: "Imagem", name: "imagem", widget: "image", default: "/img/default-thumb.png" }
+      - { label: "Thumbnail", name: "thumbnail", widget: "image", default: "/img/default-thumb.png" }
 
       - label: "Type"
         name: "type"
@@ -31,3 +24,12 @@ collections:
         widget: "list"
         fields:
           - { label: "Tag Name", name: "tag", widget: "string" }
+
+      - label: "Content"
+        name: "content"
+        widget: "object"
+        fields:
+          - { label: "Titulo", name: "title", widget: "markdown" }
+          - { label: "Paragrafo", name: "paragraph", widget: "markdown" }
+          - { label: "Imagem", name: "imagem", widget: "image" }
+
