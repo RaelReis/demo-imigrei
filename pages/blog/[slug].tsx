@@ -58,12 +58,12 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   };
 };
 
-export function getStaticProps(ctx: any) {
-  const { slug } = ctx.params;
+export async function getStaticProps(ctx: any) {
+  const { slug } = await ctx.params;
 
   try {
-    const realSlug = slug.replace(/\.md$/, "");
-    const fullPath = join("/content/blog/posts", `${realSlug}.md`);
+    const realSlug = await slug.replace(/\.md$/, "");
+    const fullPath = join("content/blog/posts", `${realSlug}.md`);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
     const serialized = JSON.stringify(data);
