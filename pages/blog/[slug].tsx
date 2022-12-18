@@ -36,7 +36,7 @@ export default function Post({ data }: PostProps) {
         <article>
           <ReactMarkdown>{title}</ReactMarkdown>
           <ReactMarkdown>{description}</ReactMarkdown>
-          <Image src={thumbnail} alt="" />
+          <Image src={thumbnail} alt="" width={752} height={514} />
           <p>{`tipo: ${type}`}</p>
           {tags &&
             tags.map((tag) => (
