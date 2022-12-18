@@ -74,6 +74,9 @@ export async function getStaticProps(ctx: any) {
       },
     };
   } catch (e) {
+    
+    console.log(e);
+
     return {
       notFound: true,
     };
