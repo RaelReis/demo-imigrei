@@ -63,7 +63,13 @@ export async function getStaticProps(ctx: any) {
   const { slug } = await ctx.params;
 
   const realSlug = await slug.replace(/\.md$/, "");
+
+  console.log(realSlug);
+
   const fullPath = join("content/blog/posts", `${realSlug}.md`);
+
+  console.log(fullPath);
+
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data } = matter(fileContents);
   const serialized = JSON.stringify(data);
