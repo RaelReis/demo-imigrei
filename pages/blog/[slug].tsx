@@ -54,13 +54,7 @@ export default function Post({ data }: PostProps) {
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   return {
-    paths: [
-      {
-        params: {
-          slug: "2022-12-17-3-dicas-imperdiveis-para-ter-o-seu-visto-em-portugal",
-        },
-      }, // [] - empty indicates that no page needs be created at build time
-    ],
+    paths: [],
     fallback: "blocking", //indicates the type of fallback
   };
 };
