@@ -7,7 +7,6 @@ import ReactMarkdown from "react-markdown";
 import Header from "../../components/Header";
 import { GetStaticPaths } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 interface PostProps {
   data: string;
@@ -52,24 +51,24 @@ export default function Post({ data }: PostProps) {
   );
 }
 
-// export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
-//   const files = fs.readdirSync("content/blog/posts");
+export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
+  const files = fs.readdirSync("content/blog/posts");
 
-//   // Get all blog posts file names from CMS folder (*.md)
-//   // and create a object with all names as slugs
+  // Get all blog posts file names from CMS folder (*.md)
+  // and create a object with all names as slugs
 
-//   const staticBlogList = files.map((fileName) => {
-//     const pureFileName = fileName.replace(/\.md$/, "");
-//     return { params: { slug: pureFileName } };
-//   });
+  const staticBlogList = files.map((fileName) => {
+    const pureFileName = fileName.replace(/\.md$/, "");
+    return { params: { slug: pureFileName } };
+  });
 
-//   return {
-//     paths: [...staticBlogList], // create all blog posts static site
-//     fallback: "blocking", //indicates the type of fallback
-//   };
-// };
+  return {
+    paths: [...staticBlogList], // create all blog posts static site
+    fallback: "blocking", //indicates the type of fallback
+  };
+};
 
-export async function getServerSideProps(ctx: any) {
+export async function getStaticProps(ctx: any) {
   const { slug } = await ctx.params;
 
   try {
