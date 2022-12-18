@@ -9,7 +9,7 @@ import Image from "next/image";
 import { GetStaticPaths } from "next";
 
 interface PostProps {
-  data: string | Post;
+  data: string;
 }
 
 interface Post {
@@ -23,7 +23,7 @@ interface Post {
 }
 
 export default function Post({ data }: PostProps) {
-  const { title, description, date, thumbnail, type, tags, content } = data as Post;
+  const { title, description, date, thumbnail, type, tags, content } = JSON.parse(data) as Post;
 
   if (!data) {
     return <p>404</p>;
