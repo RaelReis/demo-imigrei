@@ -53,14 +53,15 @@ export default function Post({ data }: PostProps) {
 }
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
+  const files = fs.readdirSync("content/blog/posts");
+
+  const staticBlogList = files.map((fileName) => {
+    const pureFileName = fileName.replace(/\.md$/, "");
+    return { params: { slug: pureFileName } };
+  });
+
   return {
-    paths: [
-      {
-        params: {
-          slug: "teste",
-        },
-      },
-    ],
+    paths: [...staticBlogList],
     fallback: "blocking", //indicates the type of fallback
   };
 };
@@ -75,8 +76,6 @@ export async function getStaticProps(ctx: any) {
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
     const serialized = JSON.stringify(data);
-
-    console.log(serialized);
 
     return {
       props: {
