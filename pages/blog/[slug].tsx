@@ -5,11 +5,11 @@ import matter from "gray-matter";
 import ReactMarkdown from "react-markdown";
 
 import Header from "../../components/Header";
-import { GetStaticPaths } from "next";
 import Image from "next/image";
+import { GetStaticPaths } from "next";
 
 interface PostProps {
-  data: string;
+  data: string | Post;
 }
 
 interface Post {
@@ -23,7 +23,7 @@ interface Post {
 }
 
 export default function Post({ data }: PostProps) {
-  const { title, description, date, thumbnail, type, tags, content } = JSON.parse(data) as Post;
+  const { title, description, date, thumbnail, type, tags, content } = data as Post;
 
   if (!data) {
     return <p>404</p>;
@@ -71,22 +71,16 @@ export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
 export async function getStaticProps(ctx: any) {
   const { slug } = await ctx.params;
 
-  try {
-    const realSlug = await slug.replace(/\.md$/, "");
-    const fullPath = join("content/blog/posts", `${realSlug}.md`);
+  const realSlug = await slug.replace(/\.md$/, "");
+  const fullPath = join("content/blog/posts", `${realSlug}.md`);
 
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(fileContents);
-    const serialized = JSON.stringify(data);
+  const fileContents = fs.readFileSync(fullPath, "utf8");
+  const { data } = matter(fileContents);
+  const serialized = JSON.stringify(data);
 
-    return {
-      props: {
-        data: serialized,
-      },
-    };
-  } catch (e) {
-    return {
-      notFound: true,
-    };
-  }
+  return {
+    props: {
+      data: serialized,
+    },
+  };
 }
