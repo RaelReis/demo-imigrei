@@ -26,14 +26,8 @@ interface Post {
 export default function Post({ data }: PostProps) {
   const { title, description, date, thumbnail, type, tags, content } = JSON.parse(data) as Post;
 
-  const { isFallback } = useRouter();
-
   if (!data) {
     return <p>404</p>;
-  }
-
-  if (isFallback) {
-    return <p>...Is loading</p>;
   }
 
   return (
@@ -61,9 +55,13 @@ export default function Post({ data }: PostProps) {
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   return {
     paths: [
-      { params: { slug: "2022-12-17-3-dicas-imperdíveis-para-ter-o-seu-visto-em-portugal" } }, // [] - empty indicates that no page needs be created at build time
+      {
+        params: {
+          slug: "2022-12-17-3-dicas-imperdiveis-para-ter-o-seu-visto-em-portugal",
+        },
+      }, // [] - empty indicates that no page needs be created at build time
     ],
-    fallback: true, //indicates the type of fallback
+    fallback: "blocking", //indicates the type of fallback
   };
 };
 
