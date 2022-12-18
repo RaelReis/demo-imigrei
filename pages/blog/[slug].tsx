@@ -54,7 +54,13 @@ export default function Post({ data }: PostProps) {
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   return {
-    paths: [],
+    paths: [
+      {
+        params: {
+          slug: "teste",
+        },
+      },
+    ],
     fallback: "blocking", //indicates the type of fallback
   };
 };
@@ -65,9 +71,12 @@ export async function getStaticProps(ctx: any) {
   try {
     const realSlug = await slug.replace(/\.md$/, "");
     const fullPath = join("content/blog/posts", `${realSlug}.md`);
+
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
     const serialized = JSON.stringify(data);
+
+    console.log(serialized);
 
     return {
       props: {
