@@ -63,7 +63,7 @@ export function getStaticProps(ctx: any) {
 
   try {
     const realSlug = slug.replace(/\.md$/, "");
-    const fullPath = join("content/blog/posts", `${realSlug}.md`);
+    const fullPath = join("/content/blog/posts", `${realSlug}.md`);
     const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data } = matter(fileContents);
     const serialized = JSON.stringify(data);
