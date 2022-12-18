@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import Header from "../../components/Header";
 import { GetStaticPaths } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 interface PostProps {
   data: string;
@@ -25,8 +26,14 @@ interface Post {
 export default function Post({ data }: PostProps) {
   const { title, description, date, thumbnail, type, tags, content } = JSON.parse(data) as Post;
 
+  const { isFallback } = useRouter();
+
   if (!data) {
     return <p>404</p>;
+  }
+
+  if (isFallback) {
+    return <p>...Is loading</p>;
   }
 
   return (
@@ -53,8 +60,10 @@ export default function Post({ data }: PostProps) {
 
 export const getStaticPaths: GetStaticPaths<{ slug: string }> = async () => {
   return {
-    paths: [], //indicates that no page needs be created at build time
-    fallback: "blocking", //indicates the type of fallback
+    paths: [
+      { params: { slug: "2022-12-17-3-dicas-imperdíveis-para-ter-o-seu-visto-em-portugal" } }, // [] - empty indicates that no page needs be created at build time
+    ],
+    fallback: true, //indicates the type of fallback
   };
 };
 
@@ -74,7 +83,6 @@ export async function getStaticProps(ctx: any) {
       },
     };
   } catch (e) {
-    
     console.log(e);
 
     return {
