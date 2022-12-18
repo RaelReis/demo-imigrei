@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
   branch: main # Branch to update (optional; defaults to master)
+
 media_folder: public/img
 public_folder: img
 
@@ -9,7 +10,7 @@ collections:
     name: "Post"
     folder: "content/blog/posts"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "posted-{{year}}-{{month}}-{{day}}-{{hour}}-{{minute}}-{{second}}"
     fields:
       - { label: "Titulo", name: "title", widget: "markdown" }
       - { label: "Descrição", name: "description", widget: "markdown" }
