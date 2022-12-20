@@ -116,23 +116,23 @@ export function getStaticPaths() {
 export async function getStaticProps(ctx: GetStaticPropsContext) {
   const { slug } = ctx.params as { slug: string };
 
-  const { data: postData } = await client.query<{ post: Post }>({
+  const postResponse = await client.query<{ post: Post }>({
     query: GET_POST_BY_SLUG_QUERY,
     variables: {
       slug,
     },
   });
 
-  const { data: relatedPostsData } = await client.query<{ posts: Post[] }>({
+  const relatedPostsData = await client.query<{ posts: Post[] }>({
     query: GET_POSTS_BY_CATEGORY_ORDENED_QUERY,
     variables: {
-      category: postData.post.category,
+      category: postResponse.data.post.category,
     },
   });
 
   console.log(relatedPostsData);
 
-  if (!postData) {
+  if (!postResponse.data) {
     return {
       notFound: true,
     };
@@ -140,8 +140,8 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
 
   return {
     props: {
-      post: postData.post,
-      relatedPosts: relatedPostsData.posts,
+      post: postResponse.data.post,
+      relatedPosts: relatedPostsData.data.posts,
     },
     revalidate: 60 * 60 * 1, // 1 hour
   };
