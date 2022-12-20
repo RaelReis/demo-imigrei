@@ -11,46 +11,46 @@
     font-family: "Space Grotesk", sans-serif;
   }
 
-  .markdown h2,
-  .markdown h3 {
+  .post-content h2,
+  .post-content h3 {
     @apply font-medium text-2xl text-base-title;
   }
 
-  .markdown p,
-  .markdown li {
+  .post-content p,
+  .post-content li {
     @apply text-xl text-base-text;
   }
 
-  .markdown h2 + p,
-  .markdown h2 + li,
-  .markdown h3 + p,
-  .markdown h3 + li {
+  .post-content h2 + p,
+  .post-content h2 + li,
+  .post-content h3 + p,
+  .post-content h3 + li {
     @apply mt-3;
   }
 
-  .markdown h2,
-  .markdown h3 {
+  .post-content h2,
+  .post-content h3 {
     @apply mt-[3.875rem];
   }
 
-  .markdown ul {
+  .post-content ul {
     @apply list-disc pl-8 mt-4;
   }
 
-  .markdown li + li,
-  .markdown p + p {
+  .post-content li + li,
+  .post-content p + p {
     @apply mt-2;
   }
 
-  .markdown p + p {
+  .post-content p + p {
     @apply mt-4;
   }
 
-  .markdown img {
+  .post-content img {
     @apply my-8;
   }
 
-  .markdown a {
+  .post-content a {
     @apply text-base-blue underline;
   }
 }

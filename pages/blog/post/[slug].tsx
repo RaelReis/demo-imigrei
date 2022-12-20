@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Head from "next/head";
-import { GetServerSidePropsContext, GetStaticProps, GetStaticPropsContext } from "next";
-import { client } from "../../../lib/apollo";
+import { GetStaticPropsContext } from "next";
 
+import { client } from "../../../lib/apollo";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { GET_POSTS_BY_CATEGORY_ORDENED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
+import parse from "html-react-parser";
 
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import BlogList from "../../../components/BlogList";
+
+import { GET_POSTS_BY_CATEGORY_ORDENED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
 
 type Thumbnail = {
   id: string;
@@ -39,8 +41,6 @@ interface Post {
 }
 
 export default function Post({ post, relatedPosts }: PostProps) {
-  console.log(relatedPosts);
-
   const { author, title, description, category, content, tags, createdAt, updatedAt, thumbnail, thumbnailDescription } =
     post;
 
@@ -57,6 +57,21 @@ export default function Post({ post, relatedPosts }: PostProps) {
     .split(" ")
     .map((word, index) => (index === 2 ? word.toUpperCase() : word))
     .join(" ");
+
+  const replaceImage = {
+    replace: ({ name, attribs }: any) => {
+      if (name === "img") {
+        return (
+          <Image
+            src={attribs.src}
+            width={attribs.width}
+            height={attribs.height}
+            alt={attribs.alt ? attribs.alt : "Image - essa imagem não tem um texto alt"}
+          />
+        );
+      }
+    },
+  };
 
   return (
     <>
@@ -97,7 +112,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
             <small className="inline-block text-base-text text-base mb-3">{thumbnailDescription}</small>
           )}
 
-          <div className="markdown" dangerouslySetInnerHTML={{ __html: content.html }}></div>
+          <div className="post-content">{parse(content.html, { replace: replaceImage.replace })}</div>
         </article>
       </main>
       <BlogList data={relatedPosts} />
@@ -129,8 +144,6 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
       category: postResponse.data.post.category,
     },
   });
-
-  console.log(relatedPostsData);
 
   if (!postResponse.data) {
     return {
