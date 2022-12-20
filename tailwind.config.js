@@ -19,7 +19,7 @@ module.exports = {
       colors: {
         base: {
           title: "#1D1D1D",
-          text: "#999999",
+          text: "#1D1D1D",
           label: "#1E5720",
           green: "#1E5720",
           blue: "#11569E",
