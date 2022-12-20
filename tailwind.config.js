@@ -19,13 +19,14 @@ module.exports = {
       colors: {
         base: {
           title: "#1D1D1D",
-          text: "#777777",
+          text: "#999999",
           label: "#1E5720",
           green: "#1E5720",
           blue: "#11569E",
           "green-light": "#E3F1E4",
           white: "#FAFAFA",
           footer: "#D9D9D9",
+          "blog-tag": "rgba(119,119,119,.1)",
         },
       },
       backgroundImage: {

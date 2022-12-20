@@ -6,12 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.2",
+    "date-fns": "^2.29.3",
     "framer-motion": "^7.10.2",
-    "gray-matter": "^4.0.3",
+    "graphql": "^16.6.0",
     "next": "latest",
+    "next-auth": "^4.18.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-markdown": "^8.0.4"
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

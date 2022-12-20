@@ -6,6 +6,7 @@ import { motion, MotionProps } from "framer-motion";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import { useRef, useEffect, useState } from "react";
+import BlogList from "../components/BlogList";
 
 interface Constraints {
   left: number;
@@ -182,8 +183,8 @@ const Home: NextPage = () => {
         </section>
         <section className="my-10 lg:my-28 overflow-hidden">
           <div className="container flex flex-col">
-            <div className="text-center lg:text-start container flex items-center">
-              <div className="max-w-3xl mx-auto">
+            <div className="text-center lg:text-start flex items-center">
+              <div className="max-w-3xl mx-auto lg:ml-0">
                 <span className="text-sm lg:text-base text-base-green font-medium">Blog</span>
                 <h2 className="text-2xl lg:text-4xl text-base-title">Conteúdo de qualidade para imigrantes</h2>
                 <p className="text-sm lg:text-base mt-3 text-base-text">

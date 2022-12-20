@@ -4,10 +4,54 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
   }
+
   body {
     font-family: "Space Grotesk", sans-serif;
+  }
+
+  .markdown h2,
+  .markdown h3 {
+    @apply font-medium text-2xl text-base-title;
+  }
+
+  .markdown p,
+  .markdown li {
+    @apply text-xl text-base-text;
+  }
+
+  .markdown h2 + p,
+  .markdown h2 + li,
+  .markdown h3 + p,
+  .markdown h3 + li {
+    @apply mt-3;
+  }
+
+  .markdown h2,
+  .markdown h3 {
+    @apply mt-[3.875rem];
+  }
+
+  .markdown ul {
+    @apply list-disc pl-8 mt-4;
+  }
+
+  .markdown li + li,
+  .markdown p + p {
+    @apply mt-2;
+  }
+
+  .markdown p + p {
+    @apply mt-4;
+  }
+
+  .markdown img {
+    @apply my-8;
+  }
+
+  .markdown a {
+    @apply text-base-blue underline;
   }
 }
 
