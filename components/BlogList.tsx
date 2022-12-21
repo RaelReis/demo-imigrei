@@ -52,7 +52,7 @@ export default function BlogList({ data }: BlogListProps) {
         <motion.ul
           key={screenSize}
           ref={carouselRef}
-          className="my-14 flex justify-between gap-6"
+          className="my-12 md:mt-14 md:mb-32 flex justify-between gap-6"
           {...carouselConstraints}
         >
           {data.map((post) => (

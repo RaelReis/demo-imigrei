@@ -82,7 +82,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
       </Head>
       <Header />
       <main className="container">
-        <article className="max-w-[750px] my-24">
+        <article className="max-w-[750px] my-14">
           <h1 className="font-medium text-2xl lg:text-4xl text-base-title">{title}</h1>
           <p className="mt-6 mb-16 text-xl text-base-text">{description}</p>
           {tags && (
@@ -115,8 +115,19 @@ export default function Post({ post, relatedPosts }: PostProps) {
 
           <div className="post-content">{parse(content.html, { replace: replaceImage.replace })}</div>
         </article>
+
+        <div className="flex flex-col text-center px-12 lg:text-left lg:px-0 relative">
+          <span className="text-xs lg:text-base text-base-green font-medium">Relacionados</span>
+          <h2 className="font-medium text-base-title text-2xl lg:text-4xl mt-3">Leia Tambem</h2>
+          <p className="text-base-text text-sm lg:text-base mt-3">
+            Veja alguns dos posts do nosso blog que estão relacionados com o processo de cidadania italiana.
+          </p>
+          <button className="hidden lg:block button absolute right-0">Ver Todos</button>
+        </div>
       </main>
+
       <BlogList data={relatedPosts} />
+
       <Footer />
     </>
   );
