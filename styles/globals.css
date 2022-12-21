@@ -13,12 +13,12 @@
 
   .post-content h2,
   .post-content h3 {
-    @apply font-medium text-2xl text-base-title;
+    @apply font-medium text-xl lg:text-2xl text-base-title;
   }
 
   .post-content p,
   .post-content li {
-    @apply text-xl text-base-text;
+    @apply text-base-text text-sm sm:text-base md:text-lg lg:text-xl;
   }
 
   .post-content h2 + p,
@@ -34,7 +34,7 @@
   }
 
   .post-content ul {
-    @apply list-disc pl-8 mt-4;
+    @apply list-disc pl-4 sm:pl-8 mt-4;
   }
 
   .post-content li + li,
@@ -69,7 +69,7 @@
   }
 
   .link {
-    @apply underline inline-block text-base-green w-fit duration-300 hover:text-base-blue;
+    @apply text-sm sm:text-base underline inline-block text-base-green w-fit duration-300 hover:text-base-blue;
   }
 }
 

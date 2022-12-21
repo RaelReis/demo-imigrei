@@ -13,12 +13,12 @@ interface BlogCardProps {
 
 export default function BlogCard({ title, description, thumbnail: { url: thumbnailUrl }, slug }: BlogCardProps) {
   return (
-    <li className="w-full max-w-[248px]  flex flex-col gap-3">
-      <div className="h-full w-full min-h-[248px] min-w-[248px]">
+    <li className="w-full max-w-[248px] min-w-[230px] flex flex-col gap-3">
+      <div className="h-full w-full">
         <Image className="w-full h-full object-cover" src={thumbnailUrl} alt="" width={500} height={500} />
       </div>
-      <h3 className="text-xl font-medium text-base-title">{title}</h3>
-      <p className="text-base-text">{description}</p>
+      <h3 className="text-base sm:text-xl font-medium text-base-title">{title}</h3>
+      <p className="text-sm sm:text-base text-base-text">{description}</p>
       <Link href={`/blog/post/${slug}`} className="link">
         Ler este Post
       </Link>

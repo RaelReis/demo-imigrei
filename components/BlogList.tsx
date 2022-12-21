@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { useQuery } from "@apollo/client";
-import { GET_POSTS_BY_CATEGORY_ORDENED_QUERY, GET_POSTS_QUERY } from "../lib/querys";
+import { motion, MotionProps } from "framer-motion";
 import BlogCard from "./BlogCard";
 
 interface Post {
@@ -18,21 +16,44 @@ interface BlogListProps {
 }
 
 export default function BlogList({ data }: BlogListProps) {
-  const [carouselWidth, setCarouselWidth] = useState(0);
   const carouselRef = useRef<HTMLUListElement>(null);
 
+  const [carouselWidth, setCarouselWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [screenSize, setScreenSize] = useState(0);
+
   useEffect(() => {
-    carouselRef && setCarouselWidth(carouselRef.current?.scrollWidth! - carouselRef.current?.offsetWidth!);
+    setScreenSize(window.innerWidth);
+    carouselRef.current && setCarouselWidth(carouselRef.current?.scrollWidth! - carouselRef.current?.offsetWidth!);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    screenSize < 1140 ? setIsMobile(true) : setIsMobile(false);
+  }, [screenSize]);
+
+  function handleResize() {
+    setScreenSize(() => {
+      carouselRef?.current && setCarouselWidth(carouselRef.current?.scrollWidth! - carouselRef.current?.offsetWidth!);
+      return window.innerWidth;
+    });
+  }
+
+  const carouselConstraints: MotionProps = {
+    drag: isMobile ? "x" : false,
+    dragConstraints: { right: 0, left: -carouselWidth },
+  };
 
   return (
     <div className="overflow-hidden">
       <div className="container">
         <motion.ul
-          className="my-14 flex justify-between gap-4"
-          drag={"x"}
-          dragConstraints={{ right: 0, left: -carouselWidth }}
+          key={screenSize}
           ref={carouselRef}
+          className="my-14 flex justify-between gap-6"
+          {...carouselConstraints}
         >
           {data.map((post) => (
             <BlogCard {...post} />

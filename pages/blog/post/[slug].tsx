@@ -58,6 +58,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
     .map((word, index) => (index === 2 ? word.toUpperCase() : word))
     .join(" ");
 
+  // Replace function to convert html img to next img (in html parse function)
   const replaceImage = {
     replace: ({ name, attribs }: any) => {
       if (name === "img") {
@@ -94,7 +95,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
             </ul>
           )}
 
-          <div className="flex gap-10 mt-5">
+          <div className="text-xs md:text-sm lg:text-base flex gap-2 sm:gap-8 mt-5 flex-wrap">
             <span className="text-base-title">
               Criado <span className="text-base-text">{formatedCreatedAt}</span>
             </span>
