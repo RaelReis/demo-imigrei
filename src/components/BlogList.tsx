@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, MotionProps } from "framer-motion";
 import BlogCard from "./BlogCard";
+import { useQuery } from "@apollo/client";
+import { GET_POSTS_QUERY } from "../lib/querys";
 
 interface Post {
   title: string;
@@ -17,6 +19,8 @@ interface BlogListProps {
 
 export default function BlogList({ data }: BlogListProps) {
   const carouselRef = useRef<HTMLUListElement>(null);
+
+  const { data: response } = useQuery<Post>(GET_POSTS_QUERY);
 
   const [carouselWidth, setCarouselWidth] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
@@ -56,7 +60,7 @@ export default function BlogList({ data }: BlogListProps) {
           {...carouselConstraints}
         >
           {data.map((post) => (
-            <BlogCard {...post} />
+            <BlogCard key={post.slug} {...post} />
           ))}
         </motion.ul>
       </div>

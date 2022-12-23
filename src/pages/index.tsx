@@ -62,9 +62,8 @@ const Home: NextPage = () => {
         <title>Home</title>
         <meta name="description" content="Página de demonstração da imigrei" />
       </Head>
-      <Header />
       <main className="w-full min-h-screen py-0">
-        <section className="text-center lg:text-start items-center bg-base-green-light">
+        <section className="text-center lg:text-start items-center bg-base-green-light header-padding">
           <div className="container grid grid-cols-1 lg:grid-cols-2 lg:gap-11">
             <div className="py-8 lg:py-16 flex flex-col ">
               <img className="mx-auto lg:ml-0" src="/assets/flags-img.png" alt="" />
@@ -260,7 +259,7 @@ const Home: NextPage = () => {
         </section>
         <section className="my-10 lg:my-24 container lg:px-16 bg-base-green-light grid grid-cols-1 lg:grid-cols-2">
           <div className="lg:max-w-md py-16 text-center lg:text-start">
-            <span className="text-sm lg:text-base text-base-title opacity-50 font-medium">Contato</span>
+            <span className="text-sm lg:text-base text-base-text font-medium">Contato</span>
             <h2 className="mt-1 text-base-title text-2xl lg:text-4xl font-medium">Fale com a Imigrei</h2>
             <p className="text-sm lg:text-base mt-2 text-base-title">
               Preencha o formulário com os seus melhores contatos que retornaremos o mais breve possível!
@@ -288,7 +287,6 @@ const Home: NextPage = () => {
           <img className="hidden lg:block self-end mx-auto" src="/assets/contact-img.png" alt="" />
         </section>
       </main>
-      <Footer />
     </>
   );
 };

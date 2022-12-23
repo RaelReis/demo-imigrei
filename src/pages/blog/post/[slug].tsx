@@ -3,15 +3,13 @@ import Head from "next/head";
 import { GetStaticPropsContext } from "next";
 
 import { client } from "../../../lib/apollo";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import parse from "html-react-parser";
 
 import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
 import BlogList from "../../../components/BlogList";
 
-import { GET_POSTS_BY_CATEGORY_ORDENED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
+import { GET_FIRST_FOUR_POSTS_BY_CATEGORY_ORDERED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
+import { postFormatDate } from "../../../utils/formatDate";
 
 type Thumbnail = {
   id: string;
@@ -44,19 +42,8 @@ export default function Post({ post, relatedPosts }: PostProps) {
   const { author, title, description, category, content, tags, createdAt, updatedAt, thumbnail, thumbnailDescription } =
     post;
 
-  const formatedCreatedAt = format(new Date(createdAt), `'em' dd MMM 'de' yyyy`, {
-    locale: ptBR,
-  })
-    .split(" ")
-    .map((word, index) => (index === 2 ? word.toUpperCase() : word))
-    .join(" ");
-
-  const formatedUpdatedAt = format(new Date(updatedAt), "'em' dd MMM 'de' yyyy", {
-    locale: ptBR,
-  })
-    .split(" ")
-    .map((word, index) => (index === 2 ? word.toUpperCase() : word))
-    .join(" ");
+  const formatedCreatedAt = postFormatDate(createdAt);
+  const formatedUpdatedAt = postFormatDate(updatedAt);
 
   // Replace function to convert html img to next img (in html parse function)
   const replaceImage = {
@@ -81,7 +68,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
         <meta name="description" content={description} />
       </Head>
       <Header />
-      <main className="container">
+      <main className="container header-padding">
         <article className="max-w-[750px] my-14">
           <h1 className="font-medium text-2xl lg:text-4xl text-base-title">{title}</h1>
           <p className="mt-6 mb-16 text-xl text-base-text">{description}</p>
@@ -107,7 +94,9 @@ export default function Post({ post, relatedPosts }: PostProps) {
             </span>
           </div>
 
-          <Image className="mt-16 mb-3 w-full h-full" src={thumbnail.url} alt="" width={752} height={414} priority />
+          <div className="max-h-[414px] h-full mt-16 mb-3">
+            <img className="w-full h-full object-cover" src={thumbnail.url} alt="" />
+          </div>
 
           {thumbnailDescription && (
             <small className="inline-block text-base-text text-base mb-3">{thumbnailDescription}</small>
@@ -127,8 +116,6 @@ export default function Post({ post, relatedPosts }: PostProps) {
       </main>
 
       <BlogList data={relatedPosts} />
-
-      <Footer />
     </>
   );
 }
@@ -151,7 +138,7 @@ export async function getStaticProps(ctx: GetStaticPropsContext) {
   });
 
   const relatedPostsData = await client.query<{ posts: Post[] }>({
-    query: GET_POSTS_BY_CATEGORY_ORDENED_QUERY,
+    query: GET_FIRST_FOUR_POSTS_BY_CATEGORY_ORDERED_QUERY,
     variables: {
       category: postResponse.data.post.category,
     },

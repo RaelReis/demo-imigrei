@@ -97,4 +97,8 @@
   .linear-green-gradient {
     background: linear-gradient(0deg, rgba(227, 241, 228, 1) 75%, rgba(227, 241, 228, 0) 75%);
   }
+
+  .header-padding {
+    @apply pt-[120px];
+  }
 }
