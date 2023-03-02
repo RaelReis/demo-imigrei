@@ -3,39 +3,19 @@ import Head from "next/head";
 import { GetStaticPropsContext } from "next";
 
 import { client } from "../../../lib/apollo";
+import { GET_FIRST_FOUR_POSTS_BY_CATEGORY_ORDERED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
 import parse from "html-react-parser";
 
 import Header from "../../../components/Header";
 import BlogList from "../../../components/BlogList";
 
-import { GET_FIRST_FOUR_POSTS_BY_CATEGORY_ORDERED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
 import { postFormatDate } from "../../../utils/formatDate";
 
-type Thumbnail = {
-  id: string;
-  url: string;
-};
+import { Post as PostInterface } from "../../../interfaces";
 
 interface PostProps {
-  post: Post;
-  relatedPosts: Post[];
-}
-
-interface Post {
-  author: string;
-  title: string;
-  description: string;
-  category: "portugal" | "italia" | "dicas_imigrei";
-  tags: string[];
-  content: {
-    markdown: string;
-    html: string;
-  };
-  createdAt: Date;
-  updatedAt: Date;
-  slug: string;
-  thumbnail: Thumbnail;
-  thumbnailDescription: string;
+  post: PostInterface;
+  relatedPosts: PostInterface[];
 }
 
 export default function Post({ post, relatedPosts }: PostProps) {
@@ -66,6 +46,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
+        {/* <link rel="preload" href={thumbnail.url} as="image" /> */}
       </Head>
       <Header />
       <main className="container header-padding">
@@ -94,8 +75,8 @@ export default function Post({ post, relatedPosts }: PostProps) {
             </span>
           </div>
 
-          <div className="max-h-[414px] h-full mt-16 mb-3">
-            <img className="w-full h-full object-cover" src={thumbnail.url} alt="" />
+          <div className="max-h-[414px] h-full mt-16 mb-3 overflow-hidden">
+            <Image className="w-full h-full" src={thumbnail.url} alt="" width={420} height={750} priority />
           </div>
 
           {thumbnailDescription && (
@@ -130,14 +111,14 @@ export function getStaticPaths() {
 export async function getStaticProps(ctx: GetStaticPropsContext) {
   const { slug } = ctx.params as { slug: string };
 
-  const postResponse = await client.query<{ post: Post }>({
+  const postResponse = await client.query<{ post: PostInterface }>({
     query: GET_POST_BY_SLUG_QUERY,
     variables: {
       slug,
     },
   });
 
-  const relatedPostsData = await client.query<{ posts: Post[] }>({
+  const relatedPostsData = await client.query<{ posts: PostInterface[] }>({
     query: GET_FIRST_FOUR_POSTS_BY_CATEGORY_ORDERED_QUERY,
     variables: {
       category: postResponse.data.post.category,

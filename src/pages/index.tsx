@@ -1,19 +1,28 @@
+import { useRef, useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { motion, MotionProps } from "framer-motion";
 
+import { client } from "../lib/apollo";
+import { GET_POSTS_QUERY } from "../lib/querys";
+
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { useRef, useEffect, useState } from "react";
+
 import BlogList from "../components/BlogList";
+import { Post } from "../interfaces";
+
+interface HomeProps {
+  blogData: Post[];
+}
 
 interface Constraints {
   left: number;
   right: number;
 }
 
-const Home: NextPage = () => {
+export default function Home({ blogData }: HomeProps) {
   const carouselOneRef = useRef<HTMLUListElement>(null);
   const carouselTwoRef = useRef<HTMLUListElement>(null);
 
@@ -196,61 +205,7 @@ const Home: NextPage = () => {
               </Link>
             </div>
 
-            <motion.ul
-              className="my-14 flex gap-8"
-              drag={"x"}
-              dragConstraints={{ right: 0, left: -carouselTwoWidth }}
-              ref={carouselTwoRef}
-            >
-              <li className="min-w-[220px] lg:min-w-[262px] flex flex-col gap-3">
-                <div>
-                  <img src="/assets/blog-card-one.png" alt="" />
-                </div>
-                <h3 className="text-xl font-medium text-base-title">Cidadania Portuguesa</h3>
-                <p className="text-base-text">
-                  Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
-                </p>
-                <Link href="#" className="link">
-                  Ler este Post
-                </Link>
-              </li>
-              <li className="min-w-[220px] lg:min-w-[262px] flex flex-col gap-3">
-                <div>
-                  <img src="/assets/blog-card-two.png" alt="" />
-                </div>
-                <h3 className="text-xl font-medium text-base-title">Cidadania Portuguesa</h3>
-                <p className="text-base-text">
-                  Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
-                </p>
-                <Link href="#" className="link">
-                  Ler este Post
-                </Link>
-              </li>
-              <li className="min-w-[220px] lg:min-w-[262px] flex flex-col gap-3">
-                <div>
-                  <img src="/assets/blog-card-three.png" alt="" />
-                </div>
-                <h3 className="text-xl font-medium text-base-title">Cidadania Portuguesa</h3>
-                <p className="text-base-text">
-                  Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
-                </p>
-                <Link href="#" className="link">
-                  Ler este Post
-                </Link>
-              </li>
-              <li className="min-w-[220px] lg:min-w-[262px] flex flex-col gap-3">
-                <div>
-                  <img src="/assets/blog-card-four.png" alt="" />
-                </div>
-                <h3 className="text-xl font-medium text-base-title">Cidadania Portuguesa</h3>
-                <p className="text-base-text">
-                  Oferecemos uma variedade de serviços para os nossos assessorados que buscam...
-                </p>
-                <Link href="#" className="link">
-                  Ler este Post
-                </Link>
-              </li>
-            </motion.ul>
+            <BlogList data={blogData} />
 
             <Link href="#" className="lg:hidden button mx-auto">
               Ver Blog
@@ -289,6 +244,20 @@ const Home: NextPage = () => {
       </main>
     </>
   );
-};
+}
 
-export default Home;
+export async function getStaticProps() {
+  const { data } = await client.query<{ posts: Post[] }>({
+    query: GET_POSTS_QUERY,
+  });
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { blogData: data.posts },
+  };
+}

@@ -31,7 +31,7 @@ export const GET_POST_BY_SLUG_QUERY = gql`
       }
       slug
       thumbnail {
-        url(transformation: { image: { resize: { height: 414, width: 750 } } })
+        url
       }
       comments {
         name

@@ -41,7 +41,7 @@ export default function Header() {
     <header className="fixed top-0 w-full py-[2.375rem] bg-transparent duration-300 z-50" ref={headerRef}>
       <div className="container flex items-center justify-between">
         <Link href="/">
-          <img src="/assets/logo.svg" alt="Main Logo" width={193} height={35} />
+          <img data-testid="svg-element" src="/assets/logo.svg" alt="Main Logo" width={193} height={35} />
         </Link>
 
         <nav className="hidden lg:flex items-center text-xl gap-14 text-base-green">
