@@ -1,70 +1,45 @@
 import { useRef, useEffect, useState } from "react";
-import type { NextPage } from "next";
+import { motion, MotionProps } from "framer-motion";
 import Head from "next/head";
 import Link from "next/link";
-import { motion, MotionProps } from "framer-motion";
 
 import { client } from "../lib/apollo";
-import { GET_POSTS_QUERY } from "../lib/querys";
+import { GET_FIRST_FOUR_POSTS_ORDERED_BY_LIKES_QUERY } from "../lib/querys";
 
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Carousel from "../components/Carousel";
+import BlogCard from "../components/BlogCard";
 
-import BlogList from "../components/BlogList";
 import { Post } from "../interfaces";
 
 interface HomeProps {
   blogData: Post[];
 }
 
-interface Constraints {
-  left: number;
-  right: number;
-}
+const SERVICES_DATA = [
+  {
+    title: "Cidadania Portuguesa",
+    description:
+      "Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em Portugal e Itália!",
+    link: "#",
+    imagePath: "/assets/card-one-bg.png",
+  },
+  {
+    title: "Cidadania Italiana",
+    description:
+      "Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em Portugal e Itália!",
+    link: "#",
+    imagePath: "/assets/card-two-bg.png",
+  },
+  {
+    title: "Vistos Portugal",
+    description:
+      "Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em Portugal e Itália!",
+    link: "#",
+    imagePath: "/assets/card-three-bg.png",
+  },
+];
 
 export default function Home({ blogData }: HomeProps) {
-  const carouselOneRef = useRef<HTMLUListElement>(null);
-  const carouselTwoRef = useRef<HTMLUListElement>(null);
-
-  const [carouselOneWidth, setCarouselOneWidth] = useState(0);
-  const [carouselTwoWidth, setCarouselTwoWidth] = useState(0);
-
-  const [carouselOneConstraints, setCarouselOneConstraints] = useState<Constraints>({ right: 0, left: 0 });
-  const [carouselTwoConstraints, setCarouselTwoConstraints] = useState<Constraints>({ right: 0, left: 0 });
-
-  const [isDragable, setIsDrabable] = useState(false);
-
-  useEffect(() => {
-    if (window.innerWidth <= 1210) {
-      setIsDrabable(true);
-      setCarouselOneWidth(carouselOneRef.current?.scrollWidth! - carouselOneRef.current?.offsetWidth!);
-      setCarouselTwoWidth(carouselTwoRef.current?.scrollWidth! - carouselTwoRef.current?.offsetWidth!);
-    } else {
-      setIsDrabable(false);
-    }
-
-    window.addEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    setCarouselOneConstraints({ right: 0, left: -carouselOneWidth });
-    setCarouselTwoConstraints({ right: 0, left: -carouselTwoWidth });
-  }, [carouselOneWidth, carouselTwoWidth]);
-
-  function handleResize() {
-    if (window.innerWidth <= 1210) {
-      setIsDrabable(true);
-      setCarouselOneWidth(carouselOneRef.current?.scrollWidth! - carouselOneRef.current?.offsetWidth!);
-      setCarouselTwoWidth(carouselTwoRef.current?.scrollWidth! - carouselTwoRef.current?.offsetWidth!);
-    } else {
-      setIsDrabable(false);
-    }
-  }
-
-  const teste: MotionProps = isDragable
-    ? { drag: "x", dragConstraints: { right: 0, left: -carouselOneWidth } }
-    : { drag: false };
-
   return (
     <>
       <Head>
@@ -119,59 +94,26 @@ export default function Home({ blogData }: HomeProps) {
           </div>
 
           <section className="mt-6 py-8 linear-green-gradient overflow-hidden">
-            <motion.div
-              className={`container h-full ${isDragable ? "cursor-grab" : ""}`}
-              whileTap={{ cursor: "grabbing" }}
-              key={carouselOneWidth}
-            >
-              <motion.ul className="flex items-center gap-8 text-start" {...teste} ref={carouselOneRef}>
-                <li className="flex flex-col shadow-2xl min-w-[256px] sm:min-w-[348px] sm:min-h-max">
+            <Carousel
+              listData={SERVICES_DATA}
+              render={(service: typeof SERVICES_DATA[0]) => (
+                <li
+                  key={service.title}
+                  className="flex flex-col shadow-2xl min-w-[256px] sm:min-w-[348px] sm:min-h-max text-start"
+                >
                   <div>
-                    <img className="w-full" src="/assets/card-one-bg.png" alt="" />
+                    <img className="w-full" src={service.imagePath} alt="" />
                   </div>
                   <div className="bg-white p-6 lg:p-8">
-                    <h3 className="text-base sm:text-xl font-medium">Cidadania Portuguesa</h3>
-                    <p className="mt-2 text-sm sm:text-base text-base-text">
-                      Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em
-                      Portugal e Itália!
-                    </p>
-                    <Link href="#" className="link mt-4 lg:mt-11">
+                    <h3 className="text-base sm:text-xl font-medium">{service.title}</h3>
+                    <p className="mt-2 text-sm sm:text-base text-base-text">{service.description}</p>
+                    <Link href={service.link} className="link mt-4 lg:mt-11">
                       Saber Mais
                     </Link>
                   </div>
                 </li>
-                <li className="flex flex-col shadow-2xl min-w-[256px] sm:min-w-[348px] sm:min-h-max">
-                  <div>
-                    <img className="w-full" src="/assets/card-two-bg.png" alt="" />
-                  </div>
-                  <div className="bg-white p-6 lg:p-8">
-                    <h3 className="text-base sm:text-xl font-medium">Cidadania Italiana</h3>
-                    <p className="mt-2 text-sm sm:text-base text-base-text">
-                      Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em
-                      Portugal e Itália!
-                    </p>
-                    <Link href="#" className="link mt-4 lg:mt-11">
-                      Saber Mais
-                    </Link>
-                  </div>
-                </li>
-                <li className="flex flex-col shadow-2xl min-w-[256px] sm:min-w-[348px] sm:min-h-max">
-                  <div>
-                    <img className="w-full" src="/assets/card-three-bg.png" alt="" />
-                  </div>
-                  <div className="bg-white p-6 lg:p-8">
-                    <h3 className="text-base sm:text-xl font-medium">Vistos Portugal</h3>
-                    <p className="mt-2 text-sm sm:text-base text-base-text">
-                      Oferecemos uma variedade de serviços para os nossos assessorados que buscam o sonho de viver em
-                      Portugal e Itália!
-                    </p>
-                    <Link href="#" className="link mt-4 lg:mt-11">
-                      Saber Mais
-                    </Link>
-                  </div>
-                </li>
-              </motion.ul>
-            </motion.div>
+              )}
+            />
           </section>
         </section>
         <section className="container my-10 lg:my-20 py-14 text-center text-base-title bg-newsletter bg-cover">
@@ -189,7 +131,7 @@ export default function Home({ blogData }: HomeProps) {
             <button className="button-fill w-full lg:w-fit text-sm lg:text-base">Cadastrar</button>
           </form>
         </section>
-        <section className="my-10 lg:my-28 overflow-hidden">
+        <section className="my-10 lg:my-28">
           <div className="container flex flex-col">
             <div className="text-center lg:text-start flex items-center">
               <div className="max-w-3xl mx-auto lg:ml-0">
@@ -205,7 +147,7 @@ export default function Home({ blogData }: HomeProps) {
               </Link>
             </div>
 
-            <BlogList data={blogData} />
+            <Carousel listData={blogData} render={(data: Post) => <BlogCard key={data.slug} {...data} />} />
 
             <Link href="#" className="lg:hidden button mx-auto">
               Ver Blog
@@ -248,7 +190,7 @@ export default function Home({ blogData }: HomeProps) {
 
 export async function getStaticProps() {
   const { data } = await client.query<{ posts: Post[] }>({
-    query: GET_POSTS_QUERY,
+    query: GET_FIRST_FOUR_POSTS_ORDERED_BY_LIKES_QUERY,
   });
 
   if (!data) {

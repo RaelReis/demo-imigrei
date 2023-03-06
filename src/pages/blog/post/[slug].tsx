@@ -1,17 +1,18 @@
+import { GetStaticPropsContext } from "next";
 import Image from "next/image";
 import Head from "next/head";
-import { GetStaticPropsContext } from "next";
+import parse from "html-react-parser";
 
 import { client } from "../../../lib/apollo";
 import { GET_FIRST_FOUR_POSTS_BY_CATEGORY_ORDERED_QUERY, GET_POST_BY_SLUG_QUERY } from "../../../lib/querys";
-import parse from "html-react-parser";
 
 import Header from "../../../components/Header";
-import BlogList from "../../../components/BlogList";
-
-import { postFormatDate } from "../../../utils/formatDate";
+import Carousel from "../../../components/Carousel";
+import BlogCard from "../../../components/BlogCard";
 
 import { Post as PostInterface } from "../../../interfaces";
+import { postFormatDate } from "../../../utils/formatDate";
+import { useRef } from "react";
 
 interface PostProps {
   post: PostInterface;
@@ -19,6 +20,8 @@ interface PostProps {
 }
 
 export default function Post({ post, relatedPosts }: PostProps) {
+  const carouselRef = useRef<HTMLUListElement>(null);
+
   const { author, title, description, category, content, tags, createdAt, updatedAt, thumbnail, thumbnailDescription } =
     post;
 
@@ -46,7 +49,6 @@ export default function Post({ post, relatedPosts }: PostProps) {
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />
-        {/* <link rel="preload" href={thumbnail.url} as="image" /> */}
       </Head>
       <Header />
       <main className="container header-padding">
@@ -96,7 +98,11 @@ export default function Post({ post, relatedPosts }: PostProps) {
         </div>
       </main>
 
-      <BlogList data={relatedPosts} />
+      <Carousel
+        carouselRef={carouselRef}
+        listData={relatedPosts}
+        render={(data: PostInterface) => <BlogCard {...data} />}
+      />
     </>
   );
 }
@@ -108,8 +114,8 @@ export function getStaticPaths() {
   };
 }
 
-export async function getStaticProps(ctx: GetStaticPropsContext) {
-  const { slug } = ctx.params as { slug: string };
+export async function getStaticProps({ params }: GetStaticPropsContext) {
+  const { slug } = params as { slug: string };
 
   const postResponse = await client.query<{ post: PostInterface }>({
     query: GET_POST_BY_SLUG_QUERY,
