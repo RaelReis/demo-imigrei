@@ -20,8 +20,6 @@ interface PostProps {
 }
 
 export default function Post({ post, relatedPosts }: PostProps) {
-  const carouselRef = useRef<HTMLUListElement>(null);
-
   const { author, title, description, category, content, tags, createdAt, updatedAt, thumbnail, thumbnailDescription } =
     post;
 
@@ -98,11 +96,7 @@ export default function Post({ post, relatedPosts }: PostProps) {
         </div>
       </main>
 
-      <Carousel
-        carouselRef={carouselRef}
-        listData={relatedPosts}
-        render={(data: PostInterface) => <BlogCard {...data} />}
-      />
+      <Carousel listData={relatedPosts} render={(data: PostInterface) => <BlogCard {...data} />} />
     </>
   );
 }
